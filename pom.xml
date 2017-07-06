@@ -5,14 +5,52 @@
 
   <groupId>com.jobjects</groupId>
   <artifactId>highlighter-client</artifactId>
-  <name>highlighter-client</name>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
 
-  <!--<scm>-->
-    <!--<connection>scm:git:git@github.com:swagger-api/swagger-mustache.git</connection>-->
-    <!--<developerConnection>scm:git:git@github.com:swagger-api/swagger-codegen.git</developerConnection>-->
-    <!--<url>https://github.com/swagger-api/swagger-codegen</url>-->
-  <!--</scm>-->
+  <name>PDF Highlighter Client</name>
+  <description>Java client for PDF Highlighter</description>
+  <url>http://pdf-highlighter.com</url>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>jobjects</name>
+    <url>http://jobjects.com</url>
+  </organization>
+
+  <developers>
+    <developer>
+      <name>jobjects</name>
+      <email>info@jobjects.com</email>
+      <organization>jobjects</organization>
+      <organizationUrl>http://www.jobjects.com</organizationUrl>
+    </developer>
+    <developer>
+      <email>radomir@mlad.me</email>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:jobjects/highlighter-client.git</connection>
+    <developerConnection>scm:git:git@github-jobjects/highlighter-client.git</developerConnection>
+    <url>https://github.com/jobjects/highlighter-client/tree/master</url>
+  </scm>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <prerequisites>
     <maven>2.2.0</maven>
@@ -99,10 +137,33 @@
           </execution>
         </executions>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.10.4</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
 
       <plugin>
@@ -126,6 +187,33 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.7</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <!--<autoReleaseAfterClose>true</autoReleaseAfterClose>-->
+        </configuration>
       </plugin>
 
     </plugins>
